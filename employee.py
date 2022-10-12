@@ -1,11 +1,5 @@
 """Employee pay calculator."""
 """ENTER YOUR SOLUTION HERE!"""
-# import enum as Enum
-#
-# CommissionType = Enum('CommissionType', 'none bonus cpc')
-# EmployeeType = Enum('EmployeeType', 'salary hourly')
-
-
 
 class Comission:
     def __init__(self, wage=0):
