@@ -29,13 +29,16 @@ class PerContractComission(Comission):
         self.cpc = cpc
 
     def bonusString(self):
-        return f" and receives a commission for {contracts} contract(s) at {cpc}/contract"
+        return f" and receives a commission for {self.contracts} contract(s) at {self.cpc}/contract"
 
 
 class Salary:
     def __init__(self, total=0, comission=Comission()):
         self.total = total
         self.comission = comission
+
+    def salaryString(self):
+        return ""
 
 class HourlySalary(Salary):
     def __init__(self, hours, perhour, comission=Comission()):
@@ -44,7 +47,7 @@ class HourlySalary(Salary):
         self.perhour = perhour
 
     def salaryString(self):
-        return f"Jan works on a contract of {self.hours} hours at {self.perhour}/hour" + self.comission.bonusString + f". Their total pay is {self.total}."
+        return f"works on a contract of {self.hours} hours at {self.perhour}/hour" + self.comission.bonusString() + f". Their total pay is {self.total}."
 
 class MonthlySalary(Salary):
     def __init__(self, monthly, comission=Comission()):
@@ -52,7 +55,7 @@ class MonthlySalary(Salary):
         self.monthly = monthly
 
     def salaryString(self):
-        return f"Billie works on a monthly salary of {self.monthly}" + self.comission.bonusString + f". Their total pay is {self.total}."
+        return f"works on a monthly salary of {self.monthly}" + self.comission.bonusString() + f". Their total pay is {self.total}."
 
 
 
@@ -64,24 +67,9 @@ class Employee:
 
     def get_pay(self):
         return self.salary.total
-        # total = 0
-        # if self.employeetype == EmployeeType.salary:
-        #     total += wage*months
-        # elif self.employeetype == EmployeeType.hourly:
-        #     total += wage*hours
-        # else:
-        #     pass
-        #
-        # if self.comissiontype == CommissionType.none:
-        #     pass
-        # elif self.comissiontype == CommissionType.bonus:
-        #     total += self.bonus
-        # elif self.comissiontype == CommissionType.cpc:
-        #     total += self.contracts*self.commissionpercontract
-        # else:
-        #     pass
+
     def __str__(self):
-        return self.name
+        return self.name +" "+ self.salary.salaryString();
 
 
 # Billie works on a monthly salary of 4000.  Their total pay is 4000.
@@ -94,7 +82,7 @@ charlie = Employee('Charlie', HourlySalary(100, 25))
 renee = Employee('Renee', MonthlySalary(3000, PerContractComission(4, 200)))
 
 # Jan works on a contract of 150 hours at 25/hour and receives a commission for 3 contract(s) at 220/contract.  Their total pay is 4410.
-jan = Employee('Jan', HourlySalary(100, 25, PerContractComission(3, 220)))
+jan = Employee('Jan', HourlySalary(150, 25, PerContractComission(3, 220)))
 
 # Robbie works on a monthly salary of 2000 and receives a bonus commission of 1500.  Their total pay is 3500.
 robbie = Employee('Robbie', MonthlySalary(2000, BonusComission(1500)))
